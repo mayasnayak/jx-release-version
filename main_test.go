@@ -141,21 +141,6 @@ func TestGetGitTag(t *testing.T) {
 	assert.Equal(t, expectedVersion, v, "error with getLatestTag for a Makefile")
 }
 
-func TestGetNewVersionFromTagCurrentRepo(t *testing.T) {
-	c := config{
-		dryrun: false,
-		dir:    "test-resources/make",
-	}
-
-	tags := createTags()
-
-	mockClient := &mocks.GitClient{}
-	mockClient.On("ListTags", context.Background(), c.ghOwner, c.ghRepository).Return(tags, nil)
-	v, err := getNewVersionFromTag(c, mockClient)
-
-	assert.NoError(t, err)
-	assert.Equal(t, "1.2.0", v, "error bumping a patch version")
-}
 
 func TestGetNewMinorVersionFromGitHubTag(t *testing.T) {
 
